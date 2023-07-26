@@ -27,6 +27,8 @@ struct _NautilusListBaseClass
                                                GtkDirectionType  direction);
 };
 
+
+void    nautilus_list_base_reset_gesture_state     (NautilusListBase *self);
 void    nautilus_list_base_set_focus_item          (NautilusListBase *self,
                                                     NautilusViewItem *item);
 void    nautilus_list_base_preview_selection_event (NautilusListBase *view,

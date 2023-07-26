@@ -711,6 +711,8 @@ real_begin_loading (NautilusFilesView *self)
      * we need to update the menus */
     nautilus_files_view_update_context_menus (self);
     nautilus_files_view_update_toolbar_menus (self);
+
+    nautilus_list_base_reset_gesture_state (NAUTILUS_LIST_BASE (self));
 }
 
 static void
