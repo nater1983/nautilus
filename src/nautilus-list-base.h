@@ -23,9 +23,13 @@ struct _NautilusListBaseClass
         GtkWidget *(*get_view_ui)    (NautilusListBase *self);
         void       (*scroll_to_item) (NautilusListBase *self,
                                       guint                   position);
+        void       (*preview_selection_event) (NautilusListBase *view,
+                                               GtkDirectionType  direction);
 };
 
 void    nautilus_list_base_set_focus_item          (NautilusListBase *self,
                                                     NautilusViewItem *item);
+void    nautilus_list_base_preview_selection_event (NautilusListBase *view,
+                                                    GtkDirectionType  direction);
 
 G_END_DECLS
