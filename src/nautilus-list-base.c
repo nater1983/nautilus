@@ -84,7 +84,7 @@ get_view_item (GListModel *model,
     return NAUTILUS_VIEW_ITEM (gtk_tree_list_row_get_item (row));
 }
 
-void
+static void
 set_focus_item (NautilusListBase *self,
                 NautilusViewItem *item)
 {
