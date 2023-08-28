@@ -185,7 +185,6 @@ typedef struct
     guint display_selection_idle_id;
     guint update_context_menus_timeout_id;
     guint update_status_idle_id;
-    guint reveal_selection_idle_id;
 
     guint search_transition_timeout_id;
     gboolean begin_loading_delayed;
@@ -3276,12 +3275,6 @@ nautilus_files_view_dispose (GObject *object)
         priv->display_selection_idle_id = 0;
     }
 
-    if (priv->reveal_selection_idle_id != 0)
-    {
-        g_source_remove (priv->reveal_selection_idle_id);
-        priv->reveal_selection_idle_id = 0;
-    }
-
     if (priv->floating_bar_set_status_timeout_id != 0)
     {
         g_source_remove (priv->floating_bar_set_status_timeout_id);
@@ -3615,21 +3608,6 @@ nautilus_files_view_set_location (NautilusView *view,
     nautilus_profile_end (NULL);
 }
 
-static gboolean
-reveal_selection_idle_callback (gpointer data)
-{
-    NautilusFilesView *view;
-    NautilusFilesViewPrivate *priv;
-
-    view = NAUTILUS_FILES_VIEW (data);
-    priv = nautilus_files_view_get_instance_private (view);
-
-    priv->reveal_selection_idle_id = 0;
-    nautilus_files_view_reveal_selection (view);
-
-    return FALSE;
-}
-
 static void
 globalize_search (NautilusFilesView *self)
 {
@@ -3816,26 +3794,7 @@ done_loading (NautilusFilesView *view,
 
         if (do_reveal)
         {
-            if (NAUTILUS_IS_LIST_VIEW (view) || NAUTILUS_IS_GRID_VIEW (view))
-            {
-                /* HACK: We should be able to directly call reveal_selection here,
-                 * but at this point the GtkTreeView hasn't allocated the new nodes
-                 * yet, and it has a bug in the scroll calculation dealing with this
-                 * special case. It would always make the selection the top row, even
-                 * if no scrolling would be neccessary to reveal it. So we let it
-                 * allocate before revealing.
-                 */
-                if (priv->reveal_selection_idle_id != 0)
-                {
-                    g_source_remove (priv->reveal_selection_idle_id);
-                }
-                priv->reveal_selection_idle_id =
-                    g_idle_add (reveal_selection_idle_callback, view);
-            }
-            else
-            {
-                nautilus_files_view_reveal_selection (view);
-            }
+            nautilus_files_view_reveal_selection (view);
         }
         nautilus_files_view_display_selection_info (view);
     }
