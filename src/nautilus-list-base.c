@@ -986,15 +986,6 @@ real_get_selection_for_file_transfer (NautilusFilesView *files_view)
 }
 
 static void
-real_end_file_changes (NautilusFilesView *files_view)
-{
-    NautilusListBase *self = NAUTILUS_LIST_BASE (files_view);
-    NautilusListBasePrivate *priv = nautilus_list_base_get_instance_private (self);
-
-    nautilus_view_model_sort (priv->model);
-}
-
-static void
 real_set_selection (NautilusFilesView *files_view,
                     GList             *selection)
 {
@@ -1582,7 +1573,6 @@ nautilus_list_base_class_init (NautilusListBaseClass *klass)
     files_view_class->select_all = real_select_all;
     files_view_class->set_selection = real_set_selection;
     files_view_class->invert_selection = real_invert_selection;
-    files_view_class->end_file_changes = real_end_file_changes;
     files_view_class->end_loading = real_end_loading;
     files_view_class->get_first_visible_file = real_get_first_visible_file;
     files_view_class->reveal_selection = real_reveal_selection;
