@@ -2057,7 +2057,7 @@ delete_task_done (GObject      *source_object,
 
     finalize_common ((CommonJob *) job);
 
-    nautilus_file_changes_consume_changes (TRUE);
+    nautilus_file_changes_consume_changes ();
 }
 
 static void
@@ -5493,7 +5493,7 @@ copy_task_done (GObject      *source_object,
 
     finalize_common ((CommonJob *) job);
 
-    nautilus_file_changes_consume_changes (TRUE);
+    nautilus_file_changes_consume_changes ();
 }
 
 static CopyMoveJob *
@@ -6153,7 +6153,7 @@ move_task_done (GObject      *source_object,
 
     finalize_common ((CommonJob *) job);
 
-    nautilus_file_changes_consume_changes (TRUE);
+    nautilus_file_changes_consume_changes ();
 }
 
 static CopyMoveJob *
@@ -6582,7 +6582,7 @@ link_task_done (GObject      *source_object,
 
     finalize_common ((CommonJob *) job);
 
-    nautilus_file_changes_consume_changes (TRUE);
+    nautilus_file_changes_consume_changes ();
 }
 
 static void
@@ -7092,7 +7092,7 @@ create_task_done (GObject      *source_object,
 
     finalize_common ((CommonJob *) job);
 
-    nautilus_file_changes_consume_changes (TRUE);
+    nautilus_file_changes_consume_changes ();
 }
 
 static void
@@ -7884,7 +7884,7 @@ extract_task_done (GObject      *source_object,
 
     finalize_common ((CommonJob *) extract_job);
 
-    nautilus_file_changes_consume_changes (TRUE);
+    nautilus_file_changes_consume_changes ();
 }
 
 static GFile *
@@ -8402,7 +8402,7 @@ compress_task_done (GObject      *source_object,
 
     finalize_common ((CommonJob *) compress_job);
 
-    nautilus_file_changes_consume_changes (TRUE);
+    nautilus_file_changes_consume_changes ();
 }
 
 static void
