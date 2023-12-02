@@ -241,3 +241,33 @@ nautilus_fd_holder_set_location (NautilusFdHolder *self,
 
     g_object_set (self, "location", location, NULL);
 }
+
+void
+nautilus_fd_holders_release_for_mount (GMount *mount)
+{
+    g_return_if_fail (G_IS_MOUNT (mount));
+
+    g_autoptr (GFile) mount_root = g_mount_get_root (mount);
+    GHashTableIter iter;
+    GFile *location;
+    GFileEnumerator *enumerator;
+
+    g_hash_table_iter_init (&iter, location_enumerator_map);
+    while (g_hash_table_iter_next (&iter, (gpointer *) &location, (gpointer *) &enumerator))
+    {
+        if (g_file_equal (location, mount_root) ||
+            g_file_has_prefix (location, mount_root))
+        {
+            if (G_LIKELY (enumerator != NULL))
+            {
+                g_file_enumerator_close (enumerator, NULL, NULL);
+            }
+            else
+            {
+                g_warn_if_reached ();
+            }
+
+            g_hash_table_iter_remove (&iter);
+        }
+    }
+}
